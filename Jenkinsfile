@@ -2,31 +2,26 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code') {
+
+        stage('Checkout') {
             steps {
                 checkout scm
             }
         }
 
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Building the project...'
-                sh 'echo Build complete'
+                script {
+                    sh 'docker build -t devops-website .'
+                }
             }
         }
 
-        stage('Test') {
+        stage('List Images') {
             steps {
-                echo 'Running tests...'
-                sh 'echo Tests passed'
+                sh 'docker images'
             }
         }
 
-        stage('Deploy') {
-            steps {
-                echo 'Deploying application...'
-                sh 'echo Deployment complete'
-            }
-        }
     }
 }
